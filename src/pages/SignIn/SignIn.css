@@ -1,0 +1,37 @@
+/* COLOR & SPACING VARIABLES */
+:root {
+  --container: 1024px;
+  --spaceBetweenSections: 30px;
+  --spaceBetweenBlocks: 20px;
+  --darkBlue: #0b132b;
+  --greyBlue: #70778d;
+  --middleBlue: #1c2541;
+  --lightGrey: #edf2f4;
+  --radius: 10px;
+  --miniRadius: 5px;
+}
+
+h1 {
+  font-size: 4rem;
+  margin-bottom: var(--spaceBetweenSections);
+}
+
+.signin-container {
+  height: 100vh;
+  width: 300px;
+}
+form {
+  width: 100%;
+}
+.gainz-logo {
+  width: 80%;
+  margin-bottom: var(--spaceBetweenSections);
+}
+.errorMessage {
+  color: red;
+  position: absolute;
+  width: 300px;
+}
+.loader :focus {
+  outline: none;
+}
