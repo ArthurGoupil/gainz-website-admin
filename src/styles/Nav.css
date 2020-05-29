@@ -19,7 +19,7 @@ nav {
 }
 
 .logo-container {
-  width: var(--navWidth - 2 * var(--spaceBetweenSections));
+  width: calc(var(--navWidth) - 2 * var(--spaceBetweenSections));
 }
 
 .icon {
