@@ -6,8 +6,8 @@ const Loader = ({ width, height }) => {
       <div className='loader d-flex justify-center align-center'></div>
       <style>{`
         .loader-container {
-          width: ${width ? width : '70px'};
-          height: ${height ? height : '70px'};
+          width: 100%;
+          height: 100%;
         }
         .loader {
           width: ${width ? width : '70px'};
@@ -27,7 +27,7 @@ const Loader = ({ width, height }) => {
         }
         .loader-container {
           width: ${width ? width : '100%'};
-          height: ${height ? height : 'calc(60vh)'};
+          height: ${height ? height : '100%'};
         }
       `}</style>
     </div>

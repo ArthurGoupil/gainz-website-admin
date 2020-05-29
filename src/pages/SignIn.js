@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import './SignIn.css';
-import Loader from '../../components/Utils/Loader';
+import '../styles/SignIn.css';
+import Loader from '../components/Utils/Loader';
 
 const SignIn = ({ user, setUser }) => {
   const history = useHistory();
@@ -60,7 +60,7 @@ const SignIn = ({ user, setUser }) => {
   };
 
   return (
-    <div className='signin-container d-flex align-center'>
+    <div className='signin-container d-flex align-center justify-center'>
       <div className='d-flex flex-column align-center'>
         <img className='gainz-logo' src='/logo/logo-gainz.svg' alt='' />
         <h1>Admin</h1>

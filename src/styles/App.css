@@ -6,15 +6,36 @@
   --darkBlue: #0b132b;
   --greyBlue: #70778d;
   --middleBlue: #1c2541;
-  --lightGrey: #edf2f4;
+  --flashBlue: #5bc0be;
+  --lightGrey: #f2f7fa;
   --radius: 10px;
   --miniRadius: 5px;
+  --navWidth: 250px;
+  --headerHeight: 60px;
 }
 
 /* MAIN */
 * {
   box-sizing: border-box;
 }
+
+main {
+  background-color: var(--lightGrey);
+  width: calc(100vw - var(--navWidth));
+  min-height: calc(100vh - var(--headerHeight));
+}
+
+.mainSignin {
+  background-color: white;
+  width: 100vw;
+}
+
+.page-container {
+  width: calc(100vw - var(--navWidth));
+  min-height: calc(100vh - var(--headerHeight));
+  padding: var(--spaceBetweenBlocks);
+}
+
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap');
 html,
 input,

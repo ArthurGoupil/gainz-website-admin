@@ -1,0 +1,59 @@
+.squares-container {
+  width: 100%;
+  height: 100%;
+}
+
+.vertical-square {
+  width: calc(100% / 3 - 2 * var(--spaceBetweenBlocks) / 3);
+  height: 100%;
+  background-color: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 5px 8px 10px rgba(1, 1, 1, 0.05);
+  padding: 40px 20px;
+}
+
+.filter-elements-container span:not(:last-child) {
+  margin-right: 10px;
+}
+
+.filter-element {
+  padding: 10px 10px;
+  background-color: var(--lightGrey);
+  border-radius: var(--miniRadius);
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+.filter-selected {
+  border: 2px solid var(--darkBlue);
+  background-color: var(--middleBlue);
+  color: white;
+}
+
+.art-count-container {
+  width: 100%;
+  height: calc(100% - 50px);
+  padding: var(--spaceBetweenBlocks);
+}
+
+.art-count-wrapper {
+  width: 100%;
+  height: 90px;
+}
+
+.art-count {
+  font-size: 6rem;
+  color: var(--darkBlue);
+  font-weight: bold;
+  margin-bottom: calc(var(--spaceBetweenBlocks) * 2);
+}
+
+.chart-container {
+  width: 100%;
+  height: 60%;
+}
+
+svg > g > g:last-child {
+  pointer-events: none;
+}

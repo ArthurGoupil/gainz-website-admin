@@ -1,0 +1,27 @@
+nav {
+  width: var(--navWidth);
+  min-height: 100vh;
+  padding: var(--spaceBetweenSections);
+}
+
+.nav-element {
+  font-size: 1.5rem;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.dashboard {
+  margin-bottom: 5px;
+}
+
+.selected {
+  font-weight: bold;
+}
+
+.logo-container {
+  width: var(--navWidth - 2 * var(--spaceBetweenSections));
+}
+
+.icon {
+  width: 40px;
+}

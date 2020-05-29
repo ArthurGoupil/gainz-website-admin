@@ -1,0 +1,28 @@
+header {
+  height: var(--headerHeight);
+  width: 100%;
+  background-color: var(--darkBlue);
+  padding: 0 15px;
+}
+
+.title {
+  color: white;
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 2rem;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  color: white;
+  font-size: 2rem;
+  line-height: 2rem;
+  margin-bottom: 0;
+  margin-left: 15px;
+}
+
+.logout {
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
