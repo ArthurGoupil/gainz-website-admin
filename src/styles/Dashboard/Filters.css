@@ -1,0 +1,17 @@
+.filter-elements-container span:not(:last-child) {
+  margin-right: 10px;
+}
+
+.filter-element {
+  padding: 10px 10px;
+  background-color: var(--lightGrey);
+  border-radius: var(--miniRadius);
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+.filter-selected {
+  border: 2px solid var(--darkBlue);
+  background-color: var(--middleBlue);
+  color: white;
+}

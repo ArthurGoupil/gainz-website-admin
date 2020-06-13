@@ -10,7 +10,7 @@ const Loader = ({ width, height }) => {
           height: 100%;
         }
         .loader {
-          width: ${width ? width : '70px'};
+          width: 70px;
           height: ${height ? height : '70px'};
           background-image: url('/loader/loader.png');
           background-size: cover;

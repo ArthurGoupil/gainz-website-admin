@@ -3,11 +3,13 @@
   --container: 1024px;
   --spaceBetweenSections: 30px;
   --spaceBetweenBlocks: 20px;
-  --darkBlue: #0b132b;
+  --darkBlue: rgb(11, 19, 43);
   --greyBlue: #70778d;
-  --middleBlue: #1c2541;
+  --middleBlue: rgb(28, 37, 65);
   --flashBlue: #5bc0be;
   --lightGrey: #f2f7fa;
+  --red: rgb(252, 80, 80);
+  --hoveredRed: rgb(194, 62, 62);
   --radius: 10px;
   --miniRadius: 5px;
   --navWidth: 250px;
@@ -20,7 +22,9 @@
 }
 
 main {
-  background-color: var(--lightGrey);
+  background-image: url('/background/home5-empty-nogainz_ckhcwa.jpg');
+  background-position: center;
+  background-size: cover;
   width: calc(100vw - var(--navWidth));
   min-height: calc(100vh - var(--headerHeight));
 }
@@ -129,6 +133,9 @@ a:visited:hover {
 b {
   font-weight: bold;
 }
+i {
+  font-style: italic;
+}
 
 /* INPUTS */
 input:not(.submit),
@@ -159,9 +166,34 @@ button.submit {
 button.submit:hover {
   background-color: var(--darkBlue);
 }
+
+button.button {
+  padding: 10px;
+  background-color: var(--middleBlue);
+  border-radius: var(--miniRadius);
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+  user-select: none;
+}
+
+button:hover {
+  background-color: var(--darkBlue);
+}
+
+button.delete-button {
+  background-color: var(--red);
+  transition: 0.3s;
+}
+
+button.delete-button:hover {
+  background-color: var(--hoveredRed);
+}
+
 input {
-  width: 100%;
-  height: 40px;
   padding: 10px 10px;
 }
 textarea {
@@ -181,13 +213,6 @@ select:-webkit-autofill:focus {
   border: 2px solid var(--middleBlue);
   box-shadow: 0 0 0px 1000px var(--lightGrey) inset;
   transition: background-color 5000s ease-in-out 0s;
-}
-
-/* COLOR PICKER */
-.color-picker input {
-  font-size: 1.2rem;
-  padding: 5px;
-  height: inherit;
 }
 
 /* FLEXBOX */

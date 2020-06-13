@@ -36,19 +36,16 @@ const Nav = (props) => {
             setTogglePapersSubMenu(false);
           }}
         >
-          <div className='icon d-flex justify-center'>
-            <FontAwesomeIcon icon='paint-brush' />
-          </div>
-          Peinture
-        </div>
-        <div className='paintings-sub-menu'>
-          <NavLink to='/paintings/add' activeClassName='selected'>
-            <div>Ajouter un tableau</div>
-          </NavLink>
-          <NavLink to='/paintings' activeClassName='selected' exact>
-            <div>Consulter la liste</div>
+          <NavLink to='/paintings/' activeClassName='selected'>
+            <div className='d-flex'>
+              <div className='icon d-flex justify-center'>
+                <FontAwesomeIcon icon='paint-brush' />
+              </div>
+              Peinture
+            </div>
           </NavLink>
         </div>
+
         <div
           className='nav-element d-flex align-center'
           onClick={() => {
@@ -56,38 +53,16 @@ const Nav = (props) => {
             setTogglePaintingsSubMenu(false);
           }}
         >
-          <div className='icon d-flex justify-center'>
-            <FontAwesomeIcon icon='sticky-note' />
-          </div>
-          Travail sur papier
-        </div>
-        <div className='papers-sub-menu'>
-          <NavLink to='/papers/add' activeClassName='selected'>
-            <div>Ajouter un tableau</div>
-          </NavLink>
-          <NavLink to='/papers' activeClassName='selected' exact>
-            <div>Consulter la liste</div>
+          <NavLink to='/papers/' activeClassName='selected'>
+            <div className='d-flex'>
+              <div className='icon d-flex justify-center'>
+                <FontAwesomeIcon icon='sticky-note' />
+              </div>
+              Travail sur papier
+            </div>
           </NavLink>
         </div>
       </div>
-      <style>
-        {`
-        .paintings-sub-menu {
-          height: ${togglePaintingsSubMenu ? '38px' : '0'};
-          overflow: hidden;
-          transition: height 0.3s ease;
-          font-size: 1.3rem;
-          margin: 5px 0 0 40px;
-        }
-        .papers-sub-menu {
-          height: ${togglePapersSubMenu ? '38px' : '0'};
-          overflow: hidden;
-          transition: height 0.3s ease;
-          font-size: 1.3rem;
-          margin: 5px 0 0 40px;
-        }
-        `}
-      </style>
     </nav>
   );
 };

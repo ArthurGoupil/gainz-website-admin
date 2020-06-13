@@ -1,0 +1,47 @@
+.dropzone-container {
+  width: 100%;
+  height: 100%;
+}
+
+.dropzone {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: var(--lightGrey);
+  cursor: pointer;
+  border: 2px solid var(--lightGrey);
+  outline: none;
+}
+.off-drag:hover {
+  width: 100%;
+  border: 2px dashed var(--darkBlue);
+}
+
+.on-drag {
+  border: 2px dashed var(--flashBlue);
+}
+.on-drag:hover {
+  border: 2px dashed var(--flashBlue);
+}
+
+.drop-zone-preview {
+  position: relative;
+}
+.icon-close-preview {
+  width: 20px !important;
+  height: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50px;
+  padding: 5px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+}
+.icon-close-preview:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}

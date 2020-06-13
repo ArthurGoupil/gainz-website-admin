@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import Cookies from 'js-cookie';
-import axios from 'axios';
 
 import './styles/App.css';
-import SignIn from './pages/SignIn';
-import Dashboard from './pages/Dashboard/Dashboard';
+import Root from './components/Root';
 import Nav from './components/Nav';
 import Header from './components/Header';
-import Paintings from './pages/Paintings';
-import Papers from './pages/Papers';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faPaintBrush,
   faStickyNote,
   faColumns,
+  faArrowLeft,
+  faCheck,
+  faTrash,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-library.add(faColumns, faPaintBrush, faStickyNote);
+library.add(
+  faColumns,
+  faPaintBrush,
+  faStickyNote,
+  faArrowLeft,
+  faCheck,
+  faTrash,
+  faTimes
+);
 
 const App = (props) => {
-  const tokenFromCookie = Cookies.get('userToken');
-
-  let userState;
-  if (tokenFromCookie) {
-    userState = { token: tokenFromCookie };
-  } else {
-    userState = null;
-  }
-  const [user, setUser] = useState(userState);
+  const [user, setUser] = useState(Cookies.get('userToken'));
 
   return (
     <div>
@@ -39,20 +39,7 @@ const App = (props) => {
           <div>
             {user && <Header setUser={setUser} />}
             <main className={`${!user ? 'mainSignin' : 'd-flex'}`}>
-              <Switch>
-                <Route path='/signin'>
-                  <SignIn user={user} setUser={setUser} />
-                </Route>
-                <Route path='/paintings'>
-                  <Paintings user={user} />
-                </Route>
-                <Route path='/papers'>
-                  <Papers user={user} />
-                </Route>
-                <Route path='/'>
-                  <Dashboard user={user} />
-                </Route>
-              </Switch>
+              <Root user={user} setUser={setUser} />
             </main>
           </div>
         </div>

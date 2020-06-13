@@ -17,7 +17,7 @@ const Header = ({ setUser }) => {
         setSubtitle('');
         break;
       case '/paintings':
-        setTitle('Peintures');
+        setTitle('Peinture');
         setSubtitle('Liste des tableaux');
         break;
       case '/papers':
@@ -33,7 +33,14 @@ const Header = ({ setUser }) => {
         setSubtitle('Ajouter un tableau');
         break;
       default:
-        setTitle('');
+        if (location.pathname.includes('paintings')) {
+          setTitle('Peinture');
+          setSubtitle('');
+        } else if (location.pathname.includes('papers')) {
+          setTitle('Travail sur papier');
+          setSubtitle('');
+        } else setTitle('');
+
         break;
     }
   }, [location]);

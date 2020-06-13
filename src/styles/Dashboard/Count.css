@@ -1,0 +1,7 @@
+.count {
+  font-size: 6rem;
+  line-height: 6rem;
+  color: var(--darkBlue);
+  font-weight: bold;
+  margin-bottom: calc(var(--spaceBetweenBlocks) / 2);
+}

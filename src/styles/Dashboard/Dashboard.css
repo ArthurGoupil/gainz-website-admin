@@ -1,0 +1,49 @@
+.squares-container {
+  width: 100%;
+  height: 100%;
+}
+
+.vertical-square {
+  width: calc(100% / 3 - 2 * var(--spaceBetweenBlocks) / 3);
+  height: 100%;
+  background-color: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 5px 8px 10px rgba(1, 1, 1, 0.05);
+  padding: 30px 30px;
+}
+
+.square-label {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.chart-container {
+  width: 100%;
+}
+
+.chart-container-full {
+  width: 100%;
+  height: 100%;
+}
+
+.second-title {
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: var(--darkBlue);
+  font-weight: bold;
+  margin-bottom: calc(var(--spaceBetweenBlocks) / 2);
+}
+
+.free-arts {
+  margin-bottom: var(--spaceBetweenBlocks);
+}
+
+.free-paintings,
+.unknown-price-paintings {
+  margin-right: 20px;
+}
+
+svg > g > g:last-child {
+  pointer-events: none;
+}

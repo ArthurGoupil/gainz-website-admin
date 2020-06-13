@@ -1,0 +1,14 @@
+.back-icon-container {
+  position: absolute;
+  left: var(--spaceBetweenSections);
+  top: var(--spaceBetweenSections);
+  font-size: 3rem;
+  cursor: pointer;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+}
+
+.back-icon-container:hover {
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}

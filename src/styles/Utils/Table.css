@@ -1,0 +1,17 @@
+.table-container {
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: scroll;
+  padding: var(--spaceBetweenSections);
+  max-height: calc(100vh - var(--headerHeight) - var(--spaceBetweenBlocks) * 2);
+  background-color: white;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.MuiCheckbox-colorSecondary.Mui-checked {
+  color: var(--flashBlue) !important;
+}

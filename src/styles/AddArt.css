@@ -1,0 +1,51 @@
+.add-art-top-container {
+  height: 40%;
+  margin-bottom: var(--spaceBetweenBlocks);
+  overflow: hidden;
+}
+
+.add-art-bottom-container {
+  height: calc(60% - var(--spaceBetweenBlocks));
+  position: relative;
+}
+
+.format-container {
+  margin: 22px 0;
+}
+
+.add-art-margin-right {
+  margin-right: calc(var(--spaceBetweenBlocks) * 2);
+}
+
+.add-art-margin-right-big {
+  margin-right: calc(var(--spaceBetweenBlocks) * 3);
+}
+
+.add-art-margin-right-small {
+  margin-right: var(--spaceBetweenBlocks);
+}
+
+.art-preview-background {
+  width: 50%;
+  height: 100%;
+  background-image: url('/background/home5-empty-nogainz_ckhcwa.jpg');
+  background-size: cover;
+  margin-left: calc(var(--spaceBetweenBlocks) / 2);
+  border-radius: var(--radius);
+}
+
+.drag-n-drop-container {
+  width: 50%;
+  height: 100%;
+  margin-right: calc(var(--spaceBetweenBlocks) / 2);
+}
+
+.art-preview {
+  object-fit: contain;
+  border-radius: 3px;
+  box-shadow: 3px 3px 2px 1px rgba(42, 42, 42, 0.3);
+}
+
+.add-art-button {
+  border-radius: var(--miniRadius);
+}

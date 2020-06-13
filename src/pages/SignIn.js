@@ -9,6 +9,8 @@ import Loader from '../components/Utils/Loader';
 
 const SignIn = ({ user, setUser }) => {
   const history = useHistory();
+
+  const [isReadyToDisplay, setIsReadyToDisplay] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formIsLoading, setFormIsLoading] = useState(false);
@@ -41,7 +43,7 @@ const SignIn = ({ user, setUser }) => {
           }
         );
         Cookies.set('userToken', response.data.token, { expires: 7 });
-        setErrorMessage('');
+        setErrorMessage(null);
         setUser(response.data);
       } catch (e) {
         setErrorMessage('Accès non autorisé.');
@@ -59,12 +61,28 @@ const SignIn = ({ user, setUser }) => {
     setFormIsLoading(false);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsReadyToDisplay(true);
+    }, 200);
+  }, []);
+
   return (
-    <div className='signin-container d-flex align-center justify-center'>
+    <div
+      className='signin-container d-flex align-center justify-center'
+      style={{
+        opacity: isReadyToDisplay ? 1 : 0,
+        transition: ' opacity 0.5s',
+      }}
+    >
       <div className='d-flex flex-column align-center'>
-        <img className='gainz-logo' src='/logo/logo-gainz.svg' alt='' />
-        <h1>Admin</h1>
-        <form onSubmit={handleSubmit}>
+        <img
+          className='gainz-logo'
+          src='/logo/logo-gainz.svg'
+          alt='Logo Gainz'
+        />
+        <h1 className='signin-title'>Admin</h1>
+        <form onSubmit={handleSubmit} className='d-flex flex-column'>
           <label htmlFor='email'>Email</label>
           <input
             type='email'
@@ -87,9 +105,9 @@ const SignIn = ({ user, setUser }) => {
             className='submit d-flex justify-center align-center'
             type='submit'
           >
-            {formIsLoading ? <Loader height='30px' width='30px' /> : 'Valider'}
+            {!formIsLoading ? 'Valider' : <Loader height='30px' width='30px' />}
           </button>
-          <div className='errorMessage'>{errorMessage}</div>
+          {errorMessage && <div className='errorMessage'>{errorMessage}</div>}
         </form>
       </div>
     </div>

@@ -8,6 +8,11 @@ nav {
   font-size: 1.5rem;
   margin-top: 15px;
   cursor: pointer;
+  transition: margin-left 0.5s;
+}
+
+.nav-element:hover {
+  margin-left: 10px;
 }
 
 .dashboard {

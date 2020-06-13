@@ -1,0 +1,13 @@
+.select-box-border {
+  width: 14px;
+  height: 14px;
+  border-radius: 7px;
+  border: solid 2px var(--darkBlue);
+}
+
+.select-box-selected {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: var(--middleBlue);
+}
