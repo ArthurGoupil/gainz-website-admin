@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import SelectBox from '../../components/Utils/SelectBox';
-import RegularInput from '../../components/Art/RegularInput';
-import DimensionInput from '../../components/Art/DimensionInput';
-import CurrencyInput from '../../components/Art/CurrencyInput';
+import RegularInput from '../Inputs/RegularInput';
+import DimensionInput from '../Inputs/DimensionInput';
+import CurrencyInput from '../Inputs/CurrencyInput';
 import Checkbox from '../../components/Utils/Checkbox';
 
 const AddArtTextForm = ({
@@ -34,14 +34,14 @@ const AddArtTextForm = ({
   errorFields,
 }) => {
   const artSellRef = useRef();
-  const sellPriceWidthRef = useRef();
+  const [sellPriceWidth, setSellPriceWidth] = useState(0);
 
-  if (artSellRef.current && !sellPriceWidthRef.current)
-    sellPriceWidthRef.current = artSellRef.current.scrollWidth;
+  useEffect(() => {
+    if (artSellRef.current) setSellPriceWidth(artSellRef.current.scrollWidth);
+  }, [sellPriceWidth, customer, sellPrice]);
 
   const labelStyle = {
     fontSize: '2rem',
-    lineHeight: '2rem',
     fontWeight: 'bold',
     marginRight: '20px',
     textAlign: 'right',
@@ -52,20 +52,19 @@ const AddArtTextForm = ({
       <div className='d-flex space-around flex-wrap'>
         <div className='add-art-margin-right'>
           <RegularInput
-            width='200px'
+            minWidth='200px'
             label='Nom'
             labelStyle={labelStyle}
-            value={''}
+            stateValue={name}
             changeValue={setName}
             isEditing={true}
             isAnError={errorFields.includes('name') && !name}
           />
         </div>
         <RegularInput
-          width='43px'
+          minWidth='43px'
           label='Année de création'
           labelStyle={labelStyle}
-          value=''
           stateValue={creationYear}
           changeValue={setCreationYear}
           isEditing={true}
@@ -81,6 +80,7 @@ const AddArtTextForm = ({
               label='Normal'
               labelStyle={{ marginLeft: '5px', marginRight: '15px' }}
               selected={format === 'normal'}
+              setSelected={setFormat}
               onClick={() => {
                 setFormat('normal');
                 setSecondImage(null);
@@ -91,6 +91,7 @@ const AddArtTextForm = ({
               label='Diptyque'
               labelStyle={{ marginLeft: '5px', marginRight: '15px' }}
               selected={format === 'diptyque'}
+              setSelected={setFormat}
               onClick={() => {
                 setFormat('diptyque');
                 setThirdImage(null);
@@ -100,16 +101,17 @@ const AddArtTextForm = ({
               label='Triptyque'
               labelStyle={{ marginLeft: '5px' }}
               selected={format === 'triptyque'}
+              setSelected={setFormat}
               onClick={() => setFormat('triptyque')}
             />
           </div>
         </div>
         <RegularInput
-          width='200px'
+          minWidth='200px'
           label='Type'
           labelStyle={labelStyle}
           placeholder='Peinture sur toile, collages...'
-          value={''}
+          stateValue={type}
           changeValue={setType}
           isEditing={true}
           isAnError={errorFields.includes('type') && !type}
@@ -118,11 +120,12 @@ const AddArtTextForm = ({
       <div className='art-width-container d-flex space-between'>
         <div className='add-art-margin-right'>
           <DimensionInput
+            minWidth='50px'
             label={
               format === 'normal' ? 'Largeur' : 'Largeur de chaque panneau'
             }
             labelStyle={labelStyle}
-            value={0}
+            stateValue={width}
             changeValue={setWidth}
             isEditing={true}
             unit='cm'
@@ -130,9 +133,10 @@ const AddArtTextForm = ({
           />
         </div>
         <DimensionInput
+          minWidth='50px'
           label={format === 'normal' ? 'Hauteur' : 'Hauteur de chaque panneau'}
           labelStyle={labelStyle}
-          value={0}
+          stateValue={height}
           changeValue={setHeight}
           isEditing={true}
           unit='cm'
@@ -148,10 +152,9 @@ const AddArtTextForm = ({
         >
           <div className='add-art-margin-right-small'>
             <CurrencyInput
-              width='60px'
+              minWidth='60px'
               label='Prix'
               labelStyle={labelStyle}
-              value=''
               stateValue={price}
               changeValue={setPrice}
               isEditing={true}
@@ -171,7 +174,7 @@ const AddArtTextForm = ({
           ref={artSellRef}
           className='add-art-sell-container d-flex align-center'
           style={{
-            width: isSold ? `${sellPriceWidthRef.current + 2}px` : 0,
+            width: isSold ? `${sellPriceWidth}px` : 0,
             transition: 'all 0.5s',
             transitionProperty: 'width, opacity',
             opacity: isSold ? 1 : 0,
@@ -179,10 +182,10 @@ const AddArtTextForm = ({
         >
           <div className='add-art-margin-right-small'>
             <RegularInput
-              width='140px'
+              minWidth='140px'
               label='Vendu à'
               labelStyle={{ ...labelStyle, whiteSpace: 'nowrap' }}
-              value={''}
+              stateValue={customer}
               changeValue={setCustomer}
               isEditing={true}
               isAnError={errorFields.includes('customer') && !customer}
@@ -190,10 +193,9 @@ const AddArtTextForm = ({
           </div>
           <div className='add-art-margin-right-small'>
             <CurrencyInput
-              width='60px'
+              minWidth='60px'
               label='pour'
               labelStyle={{ ...labelStyle, whiteSpace: 'nowrap' }}
-              value=''
               stateValue={sellPrice}
               changeValue={setSellPrice}
               isEditing={true}

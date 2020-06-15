@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import '../styles/Art.css';
 import Loader from '../components/Utils/Loader';
-import RegularInput from '../components/Art/RegularInput';
-import CurrencyInput from '../components/Art/CurrencyInput';
-import DimensionInput from '../components/Art/DimensionInput';
-import TitleInput from '../components/Art/TitleInput';
+import RegularInput from '../components/Inputs/RegularInput';
+import CurrencyInput from '../components/Inputs/CurrencyInput';
+import DimensionInput from '../components/Inputs/DimensionInput';
+import TitleInput from '../components/Inputs/TitleInput';
 import Checkbox from '../components/Utils/Checkbox';
 import Modal from '../components/Utils/Modal';
 import MainContainer from '../components/Utils/MainContainer';
@@ -17,11 +17,7 @@ import BackButton from '../components/Utils/BackButton';
 
 const Art = ({ artType }) => {
   const { shortId } = useParams();
-  const artSellRef = useRef();
-  const sellPriceWidthRef = useRef();
-
-  if (artSellRef.current && !sellPriceWidthRef.current)
-    sellPriceWidthRef.current = artSellRef.current.scrollWidth;
+  const [sellPriceWidth, setSellPriceWidth] = useState(0);
 
   const [art, setArt] = useState(null);
   const [name, setName] = useState(null);
@@ -44,6 +40,23 @@ const Art = ({ artType }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [displayModal, setDisplayModal] = useState(false);
+
+  const artSellRef = useCallback((node) => {
+    if (node !== null) {
+      setSellPriceWidth(node.getBoundingClientRect().width);
+      console.log(node.getBoundingClientRect().width);
+    }
+  });
+
+  // useEffect(() => {
+  //   if (artSellRef.current) {
+  //     if (!originalArtSellWidth.current)
+  //       originalArtSellWidth.current = artSellRef.current.scrollWidth;
+  //     if (customer === art.customer && sellPrice === art.sellPrice) {
+  //       setSellPriceWidth(originalArtSellWidth.current);
+  //     } else setSellPriceWidth(artSellRef.current.scrollWidth);
+  //   }
+  // }, [sellPriceWidth, customer, sellPrice]);
 
   useEffect(() => {
     const fetchArt = async () => {
@@ -146,10 +159,9 @@ const Art = ({ artType }) => {
                 <div className='infos-margin-right'>
                   <RegularInput
                     label='Année'
-                    value={art.creationYear}
+                    stateValue={creationYear}
                     changeValue={setCreationYear}
                     isEditing={isEditing}
-                    isCanceling={isCanceling}
                     number
                   />
                 </div>
@@ -157,48 +169,42 @@ const Art = ({ artType }) => {
                 <div className='infos-margin-left infos-margin-right'>
                   <RegularInput
                     label='Type'
-                    value={art.type}
+                    stateValue={type}
                     changeValue={setType}
                     isEditing={isEditing}
-                    isCanceling={isCanceling}
                   />
                 </div>
                 |
                 <div className='infos-margin-left d-flex align-center'>
                   <DimensionInput
                     label='Dimensions'
-                    value={
-                      art.format === 'normal' ? art.width : art.widthOfEach
-                    }
+                    stateValue={width}
                     changeValue={setWidth}
                     isEditing={isEditing}
                     unit='cm'
-                    isCanceling={isCanceling}
                   />
                   &#160;
                   <DimensionInput
                     label='x'
-                    value={
-                      art.format === 'normal' ? art.height : art.heightOfEach
-                    }
+                    stateValue={height}
                     changeValue={setHeight}
                     isEditing={isEditing}
                     unit='cm'
-                    isCanceling={isCanceling}
                   />
                   {getArtMultiplier(art.format)}
                 </div>
               </div>
-              <div className='infos-margin-bottom d-flex align-center space-between'>
+              <div
+                className='infos-margin-bottom d-flex align-center justify-center'
+                style={{ width: '100%' }}
+              >
                 <div className='infos-margin-right'>
                   <CurrencyInput
                     label='Prix'
-                    value={art.price}
                     stateValue={price}
                     changeValue={setPrice}
                     isEditing={isEditing}
                     currency='€'
-                    isCanceling={isCanceling}
                   />
                 </div>
                 |
@@ -219,33 +225,31 @@ const Art = ({ artType }) => {
                   ref={artSellRef}
                   className='d-flex align-center'
                   style={{
-                    width: isSold ? `${sellPriceWidthRef.current + 2}px` : 0,
+                    maxWidth: isSold ? '75%' : 0,
+                    overflow: 'hidden',
                     transition: 'all 0.5s',
-                    transitionProperty: 'width, opacity',
+                    transitionProperty: 'max-width, opacity',
                     opacity: isSold ? 1 : 0,
                   }}
                 >
                   <span className='infos-margin-right'>|</span>
                   <RegularInput
-                    width='60px'
+                    minWidth='60px'
                     label='Vendu à'
                     labelStyle={{ marginRight: '3px', whiteSpace: 'nowrap' }}
-                    value={art.customer}
+                    stateValue={customer}
                     changeValue={setCustomer}
                     isEditing={isEditing}
-                    isCanceling={isCanceling}
                   />
                   &#160;
                   <CurrencyInput
-                    width='30px'
+                    minWidth='30px'
                     label='pour'
                     labelStyle={{ marginRight: '3px', whiteSpace: 'nowrap' }}
                     stateValue={sellPrice}
-                    value={art.sellPrice}
                     changeValue={setSellPrice}
                     isEditing={isEditing}
                     currency='€'
-                    isCanceling={isCanceling}
                     disabled={sellPriceIsUnknown}
                   />
                   <div className='infos-margin-right infos-margin-left'>
@@ -288,7 +292,6 @@ const Art = ({ artType }) => {
                 onClick={() => {
                   if (isEditing) {
                     resetData(art);
-                    setIsCanceling(!isCanceling);
                     setIsEditing(false);
                   } else setDisplayModal(true);
                 }}

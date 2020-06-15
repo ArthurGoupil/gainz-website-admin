@@ -85,6 +85,7 @@ const SignIn = ({ user, setUser }) => {
         <form onSubmit={handleSubmit} className='d-flex flex-column'>
           <label htmlFor='email'>Email</label>
           <input
+            className='signin-input'
             type='email'
             placeholder='Écris ton email...'
             name='email'
@@ -94,6 +95,7 @@ const SignIn = ({ user, setUser }) => {
           />
           <label htmlFor='password'>Mot de passe</label>
           <input
+            className='signin-input'
             type='password'
             placeholder='Et ton mot de passe...'
             name='password'

@@ -3,6 +3,7 @@
   height: 14px;
   border-radius: 7px;
   border: solid 2px var(--darkBlue);
+  outline-color: var(--flashBlue);
 }
 
 .select-box-selected {

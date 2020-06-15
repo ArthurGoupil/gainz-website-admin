@@ -1,35 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+
+import '../../styles/Inputs/CurrencyInput.css';
 
 const CurrencyInput = ({
-  width,
+  minWidth,
   label,
   labelStyle,
-  value,
   stateValue,
   changeValue,
   isEditing,
   currency,
-  isCanceling,
   disabled,
   isAnError,
 }) => {
-  const currencyInputRef = useRef();
+  const sizerRef = useRef();
   const inputId = 'currency-input-id-' + Math.ceil(Math.random() * 1000000000);
   const euroCurrencyId =
     'euro-currency-id-' + Math.ceil(Math.random() * 1000000000);
 
-  useEffect(() => {
-    if (isNaN(stateValue)) {
-      changeValue(value);
-      currencyInputRef.current.textContent = value;
-    } else currencyInputRef.current.textContent = stateValue;
-  }, [stateValue]);
+  // Width of the hidden div that contains stateValue in order to apply it to input
+  const [sizerWidth, setSizerWidth] = useState(null);
 
   useEffect(() => {
-    if (currencyInputRef.current) {
-      currencyInputRef.current.textContent = value;
-    }
-  }, [isCanceling, value]);
+    setSizerWidth(sizerRef.current.clientWidth);
+  }, [stateValue]);
 
   return (
     <div className='currency-input-container d-flex align-center'>
@@ -37,26 +31,22 @@ const CurrencyInput = ({
         {label && <>{label}&#160;</>}
       </span>
       <div style={{ position: 'relative' }} className='d-flex align-center'>
-        <span
+        <input
           id={inputId}
-          ref={currencyInputRef}
-          className='input'
-          style={{ paddingRight: '16px' }}
-          contentEditable={isEditing && !disabled ? true : false}
-          suppressContentEditableWarning={true}
-          onInput={(e) => {
-            Array.prototype.slice
-              .call(currencyInputRef.current.children)
-              .forEach((item) => {
-                item.remove();
-              });
-
-            if (e.currentTarget.textContent === '') changeValue('');
-            else changeValue(Number(e.currentTarget.textContent));
+          className='main-input'
+          disabled={!isEditing || disabled ? true : false}
+          onChange={(e) => {
+            if (e.target.value < 1000000000)
+              if (!isNaN(e.target.value)) {
+                if (e.target.value !== '') {
+                  changeValue(Number(e.target.value));
+                } else changeValue('');
+              }
           }}
-        >
-          {value}
-        </span>
+          autoComplete='none'
+          value={stateValue || stateValue === 0 ? stateValue : ''}
+        />
+
         <span
           id={euroCurrencyId}
           className='euro-currency'
@@ -65,10 +55,23 @@ const CurrencyInput = ({
           {currency}
         </span>
       </div>
-      <style>
-        {`
+      <div
+        ref={sizerRef}
+        style={{
+          position: 'absolute',
+          visibility: 'hidden',
+          padding: '5px',
+          fontWeight: 'bold',
+        }}
+      >
+        {stateValue}
+      </div>
+      {sizerWidth && (
+        <style>
+          {`
           #${inputId} {
-            min-width: ${width ? width : 'auto'};
+            width: ${sizerWidth + 15 + 'px'};
+            min-width: ${minWidth ? minWidth : 'auto'};            
             background-color: ${
               isEditing ? 'rgb(242, 247, 250)' : 'rgb(255, 255, 255)'
             };
@@ -77,14 +80,16 @@ const CurrencyInput = ({
             cursor: ${disabled ? 'not-allowed' : 'auto'};
             border: ${isAnError ? 'solid 2px var(--red)' : 'none'};
             outline-color: ${isAnError && 'var(--red)'};
+            padding-right: 18px;
           }
 
           #${inputId}, #${euroCurrencyId} {
-            opacity: ${disabled ? 0.3 : 1};
+            opacity: ${disabled ? 0.4 : 1};
             transition: opacity 0.5s;
           }
         `}
-      </style>
+        </style>
+      )}
     </div>
   );
 };

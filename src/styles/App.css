@@ -1,6 +1,5 @@
 /* COLOR & SPACING VARIABLES */
 :root {
-  --container: 1024px;
   --spaceBetweenSections: 30px;
   --spaceBetweenBlocks: 20px;
   --darkBlue: rgb(11, 19, 43);
@@ -68,19 +67,6 @@ textarea {
   color: var(--middleBlue);
 }
 
-/* EXTRA-MARGIN */
-.static-margins {
-  margin: 0 20px 0 20px;
-}
-.responsive-margins {
-  margin: 0 20px 0 20px;
-}
-@media only screen and (max-width: 769px) {
-  .responsive-margins {
-    margin: 0;
-  }
-}
-
 /* TITLES */
 h1 {
   color: var(--middleBlue);
@@ -138,7 +124,20 @@ i {
 }
 
 /* INPUTS */
-input:not(.submit),
+/* INPUTS */
+input.main-input {
+  height: 35px;
+  font-weight: bold;
+  border-radius: var(--miniRadius);
+  padding: 5px;
+  transition: background-color 0.5s;
+  outline-color: var(--darkBlue);
+  line-height: 2.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+input.signin-input,
 textarea {
   border-radius: var(--miniRadius);
   border: none;
@@ -146,9 +145,12 @@ textarea {
   padding: 10px 10px;
   background-color: var(--lightGrey);
 }
-label {
-  font-weight: bold;
+
+::placeholder {
+  font-weight: normal;
+  font-style: italic;
 }
+
 button.submit {
   height: 40px;
   width: 100%;
@@ -193,14 +195,6 @@ button.delete-button:hover {
   background-color: var(--hoveredRed);
 }
 
-input {
-  padding: 10px 10px;
-}
-textarea {
-  min-width: 100%;
-  max-width: 100%;
-  min-height: 100px;
-}
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

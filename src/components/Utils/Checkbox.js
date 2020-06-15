@@ -34,6 +34,12 @@ const Checkbox = ({
       <div
         id={inputId}
         className='checkbox-container d-flex justify-center align-center'
+        tabIndex='0'
+        onKeyPress={(e) => {
+          if (e.key) {
+            setChecked(!checked);
+          }
+        }}
       >
         <div className='checked-icon'>
           <FontAwesomeIcon icon='check' />

@@ -1,0 +1,10 @@
+/* DIMENSIONS INPUT */
+.dimension-input-container {
+  margin: 10px 0;
+}
+.cm-dimension {
+  position: absolute;
+  right: 5px;
+  font-weight: bold;
+  pointer-events: none;
+}

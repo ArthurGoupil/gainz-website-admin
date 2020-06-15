@@ -15,7 +15,7 @@ const AddArt = ({ user, artType }) => {
 
   const [name, setName] = useState(null);
   const [creationYear, setCreationYear] = useState(null);
-  const [type, setType] = useState(null);
+  const [type, setType] = useState('');
   const [format, setFormat] = useState('normal');
   const [width, setWidth] = useState(null);
   const [height, setHeight] = useState(null);
@@ -35,7 +35,7 @@ const AddArt = ({ user, artType }) => {
   // console.log('nom', name);
   // console.log('année', creationYear);
   // console.log('format', format);
-  console.log('type', type);
+  // console.log('type', type);
   // console.log('width', width);
   // console.log('height', height);
   // console.log('price', price);

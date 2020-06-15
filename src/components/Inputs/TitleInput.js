@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
+import '../../styles/Inputs/TitleInput.css';
+
 const TitleInput = ({
   label,
   value,
@@ -23,7 +25,7 @@ const TitleInput = ({
       <span
         id={inputId}
         ref={titleInputRef}
-        className='input title-input art-title'
+        className='main-input title-input art-title'
         contentEditable={isEditing ? true : false}
         suppressContentEditableWarning={true}
         onInput={(e) => {

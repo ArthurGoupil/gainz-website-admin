@@ -1,0 +1,10 @@
+/* CURRENCY INPUT */
+.currency-input-container {
+  margin: 10px 0;
+}
+.euro-currency {
+  position: absolute;
+  right: 7px;
+  font-weight: bold;
+  pointer-events: none;
+}

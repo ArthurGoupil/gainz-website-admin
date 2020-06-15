@@ -4,6 +4,7 @@
   border-radius: var(--miniRadius);
   margin: 10px 0;
   border: solid 2px var(--darkBlue);
+  outline-color: var(--flashBlue);
 }
 
 .checked-icon {
