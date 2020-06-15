@@ -37,7 +37,9 @@ const AddArtTextForm = ({
   const [sellPriceWidth, setSellPriceWidth] = useState(0);
 
   useEffect(() => {
-    if (artSellRef.current) setSellPriceWidth(artSellRef.current.scrollWidth);
+    if (artSellRef.current) {
+      setSellPriceWidth(artSellRef.current.scrollWidth);
+    }
   }, [sellPriceWidth, customer, sellPrice]);
 
   const labelStyle = {
@@ -174,9 +176,9 @@ const AddArtTextForm = ({
           ref={artSellRef}
           className='add-art-sell-container d-flex align-center'
           style={{
-            width: isSold ? `${sellPriceWidth}px` : 0,
+            maxWidth: isSold ? `${sellPriceWidth}px` : 0,
             transition: 'all 0.5s',
-            transitionProperty: 'width, opacity',
+            transitionProperty: 'max-width, opacity',
             opacity: isSold ? 1 : 0,
           }}
         >

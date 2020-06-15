@@ -17,7 +17,8 @@ import BackButton from '../components/Utils/BackButton';
 
 const Art = ({ artType }) => {
   const { shortId } = useParams();
-  const [sellPriceWidth, setSellPriceWidth] = useState(0);
+  const artSellRef = useRef();
+  const [sellPriceWidth, setSellPriceWidth] = useState(null);
 
   const [art, setArt] = useState(null);
   const [name, setName] = useState(null);
@@ -41,22 +42,11 @@ const Art = ({ artType }) => {
 
   const [displayModal, setDisplayModal] = useState(false);
 
-  const artSellRef = useCallback((node) => {
-    if (node !== null) {
-      setSellPriceWidth(node.getBoundingClientRect().width);
-      console.log(node.getBoundingClientRect().width);
+  useEffect(() => {
+    if (artSellRef.current) {
+      setSellPriceWidth(artSellRef.current.scrollWidth);
     }
   });
-
-  // useEffect(() => {
-  //   if (artSellRef.current) {
-  //     if (!originalArtSellWidth.current)
-  //       originalArtSellWidth.current = artSellRef.current.scrollWidth;
-  //     if (customer === art.customer && sellPrice === art.sellPrice) {
-  //       setSellPriceWidth(originalArtSellWidth.current);
-  //     } else setSellPriceWidth(artSellRef.current.scrollWidth);
-  //   }
-  // }, [sellPriceWidth, customer, sellPrice]);
 
   useEffect(() => {
     const fetchArt = async () => {
@@ -150,10 +140,9 @@ const Art = ({ artType }) => {
             </div>
             <div className='d-flex flex-column align-center'>
               <TitleInput
-                value={art.name}
+                stateValue={name}
                 changeValue={setName}
                 isEditing={isEditing}
-                isCanceling={isCanceling}
               />
               <div className='infos-margin-bottom d-flex align-center space-between'>
                 <div className='infos-margin-right'>
@@ -218,19 +207,11 @@ const Art = ({ artType }) => {
                     checked={isSold}
                     setChecked={setIsSold}
                     isEditing={isEditing}
-                    isCanceling={isCanceling}
                   />
                 </div>
                 <div
                   ref={artSellRef}
-                  className='d-flex align-center'
-                  style={{
-                    maxWidth: isSold ? '75%' : 0,
-                    overflow: 'hidden',
-                    transition: 'all 0.5s',
-                    transitionProperty: 'max-width, opacity',
-                    opacity: isSold ? 1 : 0,
-                  }}
+                  className='art-sell-container d-flex align-center'
                 >
                   <span className='infos-margin-right'>|</span>
                   <RegularInput
@@ -332,6 +313,13 @@ const Art = ({ artType }) => {
               .main-container {
                 opacity: ${isReadyToDisplay ? 1 : 0};
                 transition: opacity 0.5s;
+              }
+
+              .art-sell-container {
+                transition: all 0.5s;
+                transition-property: max-width, opacity;
+                max-width: ${isSold ? `${sellPriceWidth}px` : 0};
+                opacity: ${isSold ? 1 : 0};
               }
 
             `}

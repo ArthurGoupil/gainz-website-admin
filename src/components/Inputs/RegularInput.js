@@ -35,6 +35,7 @@ const RegularInput = ({
         placeholder={placeholder}
         onChange={(e) => {
           if (
+            !stateValue ||
             stateValue.length < 50 ||
             e.nativeEvent.inputType === 'deleteContentBackward'
           ) {
