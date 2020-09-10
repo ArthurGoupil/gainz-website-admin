@@ -7,6 +7,7 @@ import CurrencyInput from '../Inputs/CurrencyInput';
 import Checkbox from '../../components/Utils/Checkbox';
 
 const AddArtTextForm = ({
+  user,
   name,
   setName,
   creationYear,
@@ -37,10 +38,10 @@ const AddArtTextForm = ({
   const [sellPriceWidth, setSellPriceWidth] = useState(0);
 
   useEffect(() => {
-    if (artSellRef.current) {
-      setSellPriceWidth(artSellRef.current.scrollWidth);
+    if (artSellRef.current && user) {
+      setTimeout(() => setSellPriceWidth(artSellRef.current.scrollWidth), 1);
     }
-  }, [sellPriceWidth, customer, sellPrice]);
+  });
 
   const labelStyle = {
     fontSize: '2rem',

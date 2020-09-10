@@ -8,6 +8,7 @@ const Modal = ({
   icon,
   iconColor,
   question,
+  hasANegLabel,
   posLabel,
   negLabel,
   onPosClick,
@@ -38,9 +39,11 @@ const Modal = ({
           >
             {posLabel}
           </button>
-          <button className='button delete-button' onClick={onNegClick}>
-            {negLabel}
-          </button>
+          {hasANegLabel && (
+            <button className='button delete-button' onClick={onNegClick}>
+              {negLabel}
+            </button>
+          )}
         </div>
       </div>
       <style>

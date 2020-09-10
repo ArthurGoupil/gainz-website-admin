@@ -18,33 +18,32 @@ import BackButton from '../components/Utils/BackButton';
 const Art = ({ artType }) => {
   const { shortId } = useParams();
   const artSellRef = useRef();
-  const [sellPriceWidth, setSellPriceWidth] = useState(null);
+  const [sellPriceWidth, setSellPriceWidth] = useState(undefined);
 
-  const [art, setArt] = useState(null);
-  const [name, setName] = useState(null);
-  const [creationYear, setCreationYear] = useState(null);
-  const [type, setType] = useState(null);
-  const [price, setPrice] = useState(null);
-  const [isSold, setIsSold] = useState(null);
-  const [customer, setCustomer] = useState(null);
-  const [sellPrice, setSellPrice] = useState(null);
-  const [width, setWidth] = useState(null);
-  const [height, setHeight] = useState(null);
-  const [isOnHome, setIsOnHome] = useState(null);
+  const [art, setArt] = useState(undefined);
+  const [name, setName] = useState(undefined);
+  const [creationYear, setCreationYear] = useState(undefined);
+  const [type, setType] = useState(undefined);
+  const [price, setPrice] = useState(undefined);
+  const [isSold, setIsSold] = useState(undefined);
+  const [customer, setCustomer] = useState(undefined);
+  const [sellPrice, setSellPrice] = useState(undefined);
+  const [width, setWidth] = useState(undefined);
+  const [height, setHeight] = useState(undefined);
+  const [isOnHome, setIsOnHome] = useState(undefined);
 
-  const [sellPriceIsUnknown, setSellPriceIsUnknown] = useState(null);
+  const [sellPriceIsUnknown, setSellPriceIsUnknown] = useState(undefined);
 
   const [isReadyToDisplay, setIsReadyToDisplay] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const [displayModal, setDisplayModal] = useState(false);
 
   useEffect(() => {
     if (artSellRef.current) {
-      setSellPriceWidth(artSellRef.current.scrollWidth);
+      setTimeout(() => setSellPriceWidth(artSellRef.current.scrollWidth), 1);
     }
   });
 
@@ -293,6 +292,7 @@ const Art = ({ artType }) => {
                   </span>
                 </div>
               }
+              hasANegLabel
               posLabel='Oui'
               negLabel='Non'
               onNegClick={() => setDisplayModal(false)}

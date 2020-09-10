@@ -16,6 +16,12 @@ const RegularInput = ({
   const sizerRef = useRef();
   const inputId = 'regular-input-id-' + Math.ceil(Math.random() * 1000000000);
 
+  let inputHasReachedMaxLength = stateValue
+    ? number
+      ? stateValue >= 2000
+      : stateValue.length >= 50
+    : false;
+
   // Width of the hidden div that contains stateValue in order to apply it to input
   const [sizerWidth, setSizerWidth] = useState(null);
 
@@ -36,8 +42,8 @@ const RegularInput = ({
         onChange={(e) => {
           if (
             !stateValue ||
-            stateValue.length < 50 ||
-            e.nativeEvent.inputType === 'deleteContentBackward'
+            !inputHasReachedMaxLength ||
+            e.nativeEvent.inputType.includes('delete')
           ) {
             if (number) {
               if (!isNaN(e.target.value)) {
@@ -46,6 +52,11 @@ const RegularInput = ({
                 } else changeValue('');
               }
             } else changeValue(e.target.value);
+          }
+        }}
+        onMouseUp={() => {
+          if (window.getSelection().toString().length > 0) {
+            inputHasReachedMaxLength = false;
           }
         }}
         autoComplete='none'

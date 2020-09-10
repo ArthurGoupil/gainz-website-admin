@@ -17,6 +17,7 @@ import {
   faCheck,
   faTrash,
   faTimes,
+  faExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 library.add(
   faColumns,
@@ -25,7 +26,8 @@ library.add(
   faArrowLeft,
   faCheck,
   faTrash,
-  faTimes
+  faTimes,
+  faExclamation
 );
 
 const App = (props) => {

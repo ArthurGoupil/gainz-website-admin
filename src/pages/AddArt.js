@@ -9,6 +9,7 @@ import BackButton from '../components/Utils/BackButton';
 import DragNDrop from '../components/Utils/DragNDrop';
 import Loader from '../components/Utils/Loader';
 import AddArtTextForm from '../components/AddArt/AddArtTextForm';
+import ErrorModal from '../components/Utils/Modal';
 
 const AddArt = ({ user, artType }) => {
   const [isReadyToDisplay, setIsReadyToDisplay] = useState(false);
@@ -31,18 +32,18 @@ const AddArt = ({ user, artType }) => {
 
   const [errorFields, setErrorFields] = useState([]);
   const [formIsLoading, setFormIsLoading] = useState(false);
+  const [displayErrorModal, setDisplayErrorModal] = useState(false);
+  const [errorModalMessage, setErrorModalMessage] = useState();
 
-  // console.log('nom', name);
-  // console.log('année', creationYear);
-  // console.log('format', format);
-  // console.log('type', type);
-  // console.log('width', width);
-  // console.log('height', height);
-  // console.log('price', price);
-  // console.log('isSold', isSold);
-  // console.log('sellPrice', sellPrice);
-  // console.log('sellPriceIsUnknown', sellPriceIsUnknown);
-  // console.log('customer', customer);
+  const getFrenchArtType = (artType) => {
+    let frenchArtType;
+    if (artType === 'paintings') {
+      frenchArtType = 'une peinture';
+    } else {
+      frenchArtType = 'un travail sur papier';
+    }
+    return frenchArtType;
+  };
 
   const getErrorsArr = () => {
     const errorsArr = [];
@@ -78,20 +79,50 @@ const AddArt = ({ user, artType }) => {
       if (secondImage) formData.append('secondImage', secondImage);
       if (thirdImage) formData.append('thirdImage', thirdImage);
 
+      formData.append('name', name);
+      formData.append('creationYear', creationYear);
+      formData.append('type', type);
+      formData.append('format', format);
+      formData.append('width', width);
+      formData.append('height', height);
+      formData.append('price', price);
+      formData.append('isSold', isSold);
+      formData.append('sellPrice', sellPrice);
+      formData.append('sellPriceIsUnknown', sellPriceIsUnknown);
+      formData.append('customer', customer);
+
       try {
         const response = await axios.post(
-          'http://localhost:3100/paintings/add',
+          `http://localhost:3100/${artType}/add`,
           formData,
           {
             headers: {
-              Authorization: 'Bearer ' + user.token,
+              Authorization: 'Bearer ' + user,
               'Content-Type': 'multipart/form-data',
             },
           }
         );
         console.log(response.data);
       } catch (e) {
-        console.error(e.message);
+        if (
+          e.response.data.message ===
+          `${artType.slice(0, artType.length - 1)} already exists!`
+        ) {
+          setErrorModalMessage(
+            <>
+              <div>
+                Il existe déjà {getFrenchArtType(artType)} ayant le nom{' '}
+                <b>{name}</b>.
+              </div>
+              <div>Choisis-en un autre.</div>
+            </>
+          );
+          setDisplayErrorModal(true);
+        } else {
+          setErrorModalMessage(<>Une erreur est survenue. Réessaie.</>);
+          setDisplayErrorModal(true);
+        }
+        console.error({ e });
       }
       setFormIsLoading(false);
     }
@@ -119,6 +150,7 @@ const AddArt = ({ user, artType }) => {
         <BackButton artType={artType} />
         <div className='add-art-top-container d-flex flex-column align-center space-around'>
           <AddArtTextForm
+            user={user}
             name={name}
             setName={setName}
             creationYear={creationYear}
@@ -178,6 +210,7 @@ const AddArt = ({ user, artType }) => {
                 >
                   {firstImage && (
                     <img
+                      alt='Première preview'
                       src={firstImage.preview}
                       className='art-preview'
                       style={{
@@ -187,6 +220,7 @@ const AddArt = ({ user, artType }) => {
                   )}
                   {secondImage && (
                     <img
+                      alt='Deuxième preview'
                       src={secondImage.preview}
                       className='art-preview'
                       style={{
@@ -195,7 +229,11 @@ const AddArt = ({ user, artType }) => {
                     />
                   )}
                   {thirdImage && (
-                    <img src={thirdImage.preview} className='art-preview' />
+                    <img
+                      alt='Troisième preview'
+                      src={thirdImage.preview}
+                      className='art-preview'
+                    />
                   )}
                 </div>
               </div>
@@ -235,6 +273,15 @@ const AddArt = ({ user, artType }) => {
             </button>
           </div>
         </div>
+        <ErrorModal
+          icon='exclamation'
+          iconColor='rgb(252, 80, 80)'
+          question={errorModalMessage}
+          posLabel={`J'ai compris`}
+          onPosClick={() => setDisplayErrorModal(false)}
+          displayModal={displayErrorModal}
+          setDisplayModal={setDisplayErrorModal}
+        />
       </MainContainer>
       <style>
         {`

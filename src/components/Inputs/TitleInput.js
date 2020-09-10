@@ -43,7 +43,6 @@ const TitleInput = ({
         style={{
           position: 'absolute',
           visibility: 'hidden',
-          padding: '5px',
           fontSize: '3rem',
           lineHeight: '3rem',
           fontWeight: 'bold',
