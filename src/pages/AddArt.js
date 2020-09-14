@@ -109,7 +109,7 @@ const AddArt = ({ user, artType }) => {
 
       try {
         const response = await axios.post(
-          `http://localhost:3100/${artType}/add`,
+          `${process.env.REACT_APP_BACKEND_URL}/${artType}/add`,
           formData,
           {
             headers: {
