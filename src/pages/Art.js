@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
@@ -296,6 +296,7 @@ const Art = ({ artType }) => {
               posLabel='Oui'
               negLabel='Non'
               onNegClick={() => setDisplayModal(false)}
+              onOutsideClick={() => setDisplayModal(false)}
               displayModal={displayModal}
               setDisplayModal={setDisplayModal}
             />

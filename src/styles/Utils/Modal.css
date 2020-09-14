@@ -5,6 +5,7 @@
   position: absolute;
   bottom: -20px;
   right: -20px;
+  cursor: pointer;
 }
 .modal {
   width: 400px;
@@ -12,4 +13,5 @@
   background-color: white;
   border-radius: var(--radius);
   padding: var(--spaceBetweenBlocks);
+  cursor: auto;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -9,9 +10,11 @@ import BackButton from '../components/Utils/BackButton';
 import DragNDrop from '../components/Utils/DragNDrop';
 import Loader from '../components/Utils/Loader';
 import AddArtTextForm from '../components/AddArt/AddArtTextForm';
-import ErrorModal from '../components/Utils/Modal';
+import MessageModal from '../components/Utils/Modal';
 
 const AddArt = ({ user, artType }) => {
+  const history = useHistory();
+
   const [isReadyToDisplay, setIsReadyToDisplay] = useState(false);
 
   const [name, setName] = useState(null);
@@ -32,19 +35,32 @@ const AddArt = ({ user, artType }) => {
 
   const [errorFields, setErrorFields] = useState([]);
   const [formIsLoading, setFormIsLoading] = useState(false);
-  const [displayErrorModal, setDisplayErrorModal] = useState(false);
-  const [errorModalMessage, setErrorModalMessage] = useState();
+  const [displayMessageModal, setDisplayMessageModal] = useState(false);
+  const [messageModalText, setMessageModalText] = useState('');
+  const [messageModalIcon, setModalMessageIcon] = useState('');
+  const [messageModalIconColor, setModalMessageIconColor] = useState('');
+  const [messageModalButtonLabel, setMessageModalButtonLabel] = useState('');
+  const [
+    messageModalOutsideClickType,
+    setMessageModalOutsideClickType,
+  ] = useState('close');
 
-  const getFrenchArtType = (artType) => {
+  const getFrenchArtType = (artType, { pronoun }, { plural }) => {
     let frenchArtType;
+    let result;
     if (artType === 'paintings') {
-      frenchArtType = 'une peinture';
+      if (pronoun && plural) frenchArtType = 'des peintures';
+      else if (pronoun) frenchArtType = 'La peinture';
+      else if (plural) frenchArtType = 'peintures';
+      else frenchArtType = 'peinture';
     } else {
-      frenchArtType = 'un travail sur papier';
+      if (pronoun && plural) frenchArtType = 'des travaux sur papier';
+      else if (pronoun) frenchArtType = 'Le travail sur papier';
+      else if (plural) frenchArtType = 'travaux sur papier';
+      else frenchArtType = 'travail sur papier';
     }
     return frenchArtType;
   };
-
   const getErrorsArr = () => {
     const errorsArr = [];
 
@@ -102,25 +118,45 @@ const AddArt = ({ user, artType }) => {
             },
           }
         );
+        setMessageModalText(
+          <>
+            {getFrenchArtType(artType, { pronoun: true }, { plural: false })}{' '}
+            <b>{name}</b> a bien été ajouté{artType === 'paintings' && 'e'} au
+            site web.
+          </>
+        );
+        setModalMessageIcon('check');
+        setModalMessageIconColor('rgb(0, 213, 7)');
+        setMessageModalButtonLabel(`Ok`);
+        setMessageModalOutsideClickType('add-success');
+        setDisplayMessageModal(true);
         console.log(response.data);
       } catch (e) {
         if (
           e.response.data.message ===
           `${artType.slice(0, artType.length - 1)} already exists!`
         ) {
-          setErrorModalMessage(
+          setMessageModalText(
             <>
               <div>
-                Il existe déjà {getFrenchArtType(artType)} ayant le nom{' '}
-                <b>{name}</b>.
+                {getFrenchArtType(
+                  artType,
+                  { pronoun: true },
+                  { plural: false }
+                )}{' '}
+                <b>{name}</b> existe déjà.
               </div>
-              <div>Choisis-en un autre.</div>
+              <div>Choisis un autre nom.</div>
             </>
           );
-          setDisplayErrorModal(true);
+          setModalMessageIcon('exclamation');
+          setModalMessageIconColor('rgb(252, 80, 80)');
+          setMessageModalButtonLabel(`J'ai compris`);
+          setMessageModalOutsideClickType('close');
+          setDisplayMessageModal(true);
         } else {
-          setErrorModalMessage(<>Une erreur est survenue. Réessaie.</>);
-          setDisplayErrorModal(true);
+          setMessageModalText(<>Une erreur est survenue. Réessaie.</>);
+          setDisplayMessageModal(true);
         }
         console.error({ e });
       }
@@ -254,9 +290,11 @@ const AddArt = ({ user, artType }) => {
                   <>
                     (catégorie{' '}
                     <i>
-                      {artType === 'paintings'
-                        ? 'peinture'
-                        : 'travail sur papier'}
+                      {getFrenchArtType(
+                        artType,
+                        { pronoun: false },
+                        { plural: false }
+                      )}
                     </i>
                     )
                   </>
@@ -273,14 +311,25 @@ const AddArt = ({ user, artType }) => {
             </button>
           </div>
         </div>
-        <ErrorModal
-          icon='exclamation'
-          iconColor='rgb(252, 80, 80)'
-          question={errorModalMessage}
-          posLabel={`J'ai compris`}
-          onPosClick={() => setDisplayErrorModal(false)}
-          displayModal={displayErrorModal}
-          setDisplayModal={setDisplayErrorModal}
+        <MessageModal
+          icon={messageModalIcon}
+          iconColor={messageModalIconColor}
+          question={messageModalText}
+          posLabel={messageModalButtonLabel}
+          onPosClick={() => {
+            if (messageModalOutsideClickType === 'close')
+              setDisplayMessageModal(false);
+            else if (messageModalOutsideClickType === 'add-success')
+              history.push(`/${artType}`);
+          }}
+          onOutsideClick={() => {
+            if (messageModalOutsideClickType === 'close')
+              setDisplayMessageModal(false);
+            else if (messageModalOutsideClickType === 'add-success')
+              history.push(`/${artType}`);
+          }}
+          displayModal={displayMessageModal}
+          setDisplayModal={setDisplayMessageModal}
         />
       </MainContainer>
       <style>

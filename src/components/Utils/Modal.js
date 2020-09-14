@@ -13,6 +13,7 @@ const Modal = ({
   negLabel,
   onPosClick,
   onNegClick,
+  onOutsideClick,
   displayModal,
   setDisplayModal,
 }) => {
@@ -20,8 +21,7 @@ const Modal = ({
     <div
       className='modal-container d-flex justify-center align-center'
       onClick={(e) => {
-        if (e.target.className.includes('modal-container'))
-          setDisplayModal(false);
+        if (e.target.className.includes('modal-container')) onOutsideClick();
       }}
     >
       <div className='modal d-flex flex-column align-center space-around'>
