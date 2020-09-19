@@ -47,7 +47,6 @@ const AddArt = ({ user, artType }) => {
 
   const getFrenchArtType = (artType, { pronoun }, { plural }) => {
     let frenchArtType;
-    let result;
     if (artType === 'paintings') {
       if (pronoun && plural) frenchArtType = 'des peintures';
       else if (pronoun) frenchArtType = 'La peinture';
@@ -130,7 +129,6 @@ const AddArt = ({ user, artType }) => {
         setMessageModalButtonLabel(`Ok`);
         setMessageModalOutsideClickType('add-success');
         setDisplayMessageModal(true);
-        console.log(response.data);
       } catch (e) {
         if (
           e.response.data.message ===

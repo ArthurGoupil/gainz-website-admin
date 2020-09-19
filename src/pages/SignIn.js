@@ -44,7 +44,7 @@ const SignIn = ({ user, setUser }) => {
         );
         Cookies.set('userToken', response.data.token, { expires: 7 });
         setErrorMessage(null);
-        setUser(response.data);
+        setUser(response.data.token);
       } catch (e) {
         setErrorMessage('Accès non autorisé.');
         console.error(e.message);
