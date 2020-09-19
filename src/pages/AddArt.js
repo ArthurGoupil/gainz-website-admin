@@ -37,7 +37,7 @@ const AddArt = ({ user, artType }) => {
   const [formIsLoading, setFormIsLoading] = useState(false);
   const [displayMessageModal, setDisplayMessageModal] = useState(false);
   const [messageModalText, setMessageModalText] = useState('');
-  const [messageModalIcon, setModalMessageIcon] = useState('');
+  const [messageModalIcon, setModalMessageIcon] = useState('exclamation');
   const [messageModalIconColor, setModalMessageIconColor] = useState('');
   const [messageModalButtonLabel, setMessageModalButtonLabel] = useState('');
   const [
@@ -155,6 +155,10 @@ const AddArt = ({ user, artType }) => {
           setMessageModalOutsideClickType('close');
           setDisplayMessageModal(true);
         } else {
+          setModalMessageIcon('exclamation');
+          setModalMessageIconColor('rgb(252, 80, 80)');
+          setMessageModalButtonLabel(`J'ai compris`);
+          setMessageModalOutsideClickType('close');
           setMessageModalText(<>Une erreur est survenue. Réessaie.</>);
           setDisplayMessageModal(true);
         }
