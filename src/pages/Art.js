@@ -135,7 +135,25 @@ const Art = ({ artType }) => {
           <MainContainer flexBox='main-container d-flex flex-column align-center space-between'>
             <BackButton artType={artType} />
             <div className='art-image-container d-flex justify-center'>
-              <div className='art-image' alt={art.name} />
+              <img
+                src={art.bigImage}
+                alt={art.name + '-1'}
+                className='art-image art-margin-right'
+              />
+              {art.scndBigImage && (
+                <img
+                  src={art.scndBigImage}
+                  alt={art.name + '-2'}
+                  className='art-image'
+                />
+              )}
+              {art.thrdBigImage && (
+                <img
+                  src={art.thrdBigImage}
+                  alt={art.name + '-3'}
+                  className='art-image art-margin-left'
+                />
+              )}
             </div>
             <div className='d-flex flex-column align-center'>
               <TitleInput
@@ -302,10 +320,6 @@ const Art = ({ artType }) => {
             />
             <style>
               {`
-              .art-image {
-                background-image: url(${art.smallImage});
-              } 
-
               .update-button {
                 width: ${!isEditing ? '135px' : '90px'};
                 white-space: nowrap;
